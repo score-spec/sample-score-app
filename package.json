@@ -4,7 +4,7 @@
   "description": "A hello world app",
   "main": "index.js",
   "author": "William Overton",
-  "license": "PRIVATE",
+  "license": "MIT",
   "private": true,
   "dependencies": {
     "pg": "^8.10.0"

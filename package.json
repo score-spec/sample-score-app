@@ -1,0 +1,13 @@
+{
+  "name": "hello-world",
+  "version": "1.0.0",
+  "description": "A hello world app",
+  "main": "index.js",
+  "author": "William Overton",
+  "license": "PRIVATE",
+  "private": true,
+  "dependencies": {
+    "mysql2": "^3.1.1",
+    "pg": "^8.10.0"
+  }
+}

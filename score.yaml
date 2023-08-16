@@ -28,9 +28,3 @@ resources:
     type: dns
   db:  # We need a database to store data
     type: postgres
-    properties:
-      name:
-      username:
-      password:
-      host:
-      port:

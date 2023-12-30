@@ -1,3 +1,8 @@
 #!/usr/bin/env bash
 
-score-humanitec delta --env development --app my-app --org="${HUMANITEC_ORG}" --token "${HUMANITEC_TOKEN}" --deploy
+score-humanitec delta \
+    --env development \
+    --app ${HUMANITEC_APP} \
+    --org="${HUMANITEC_ORG}" \
+    --token "${HUMANITEC_TOKEN}" \
+    --deploy

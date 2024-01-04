@@ -6,7 +6,7 @@ score-compose run \
 
 cat <<EOF > postgres.yaml
 services:
-  database:
+  db:
     environment:
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_USER: ${DB_USERNAME}
@@ -15,7 +15,7 @@ services:
 EOF
 
 cat <<EOF > .env
-DB_HOST=database
+DB_HOST=db
 DB_NAME=database
 DB_PASSWORD=super-password
 DB_PORT=5432

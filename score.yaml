@@ -7,7 +7,7 @@ metadata:
 service:
   ports:
     www:
-      port: 80 # The port that the service will be exposed on
+      port: 8080 # The port that the service will be exposed on
       targetPort: 3000 # The port that the container will be listening on
 
 # Define the containers that make up this service
@@ -31,6 +31,6 @@ resources:
     params:
       host: ${resources.dns.host}
       path: /
-      port: 80
+      port: 8080
   db:  # We need a database to store data
     type: postgres

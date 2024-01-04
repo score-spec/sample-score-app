@@ -22,9 +22,9 @@ down:
 
 score-humanitec:
 	score-humanitec delta \
-    	--env development \
-    	--app ${HUMANITEC_APP} \
-    	--org="${HUMANITEC_ORG}" \
-    	--token "${HUMANITEC_TOKEN}" \
+		--env development \
+		--app ${HUMANITEC_APP} \
+		--org="${HUMANITEC_ORG}" \
+		--token "${HUMANITEC_TOKEN}" \
 		-f score.yaml
-    	--deploy
+		--deploy

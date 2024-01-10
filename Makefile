@@ -26,5 +26,6 @@ score-humanitec:
 		--app ${HUMANITEC_APP} \
 		--org="${HUMANITEC_ORG}" \
 		--token "${HUMANITEC_TOKEN}" \
-		-f score.yaml
+		-f score.yaml \
+		--extensions humanitec.score.yaml \
 		--deploy

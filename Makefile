@@ -1,24 +1,14 @@
-build:
-	docker build \
-		-t sample-score-app:latest \
-		--platform linux/amd64 \
-		.
-
-push:
-	docker push my-registry.example/sample-score-app:latest
-
 score-compose:
 	score-compose run \
+		--build . \
 		-f score.yaml \
 		-o compose.yaml
 
-up:
+compose-up:
 	docker compose up -d
 
-down:
-	docker compose down \
-		-v \
-		--remove-orphans
+compose-down:
+	docker compose down -v --remove-orphans
 
 score-humanitec:
 	score-humanitec delta \

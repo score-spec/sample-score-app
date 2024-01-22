@@ -1,36 +1,30 @@
 apiVersion: score.dev/v1b1
-
 metadata:
   name: hello-world
-
-# Define the ports that this service exposes
 service:
   ports:
     www:
-      port: 8080 # The port that the service will be exposed on
-      targetPort: 3000 # The port that the container will be listening on
-
-# Define the containers that make up this service
+      port: 8080
+      targetPort: 3000
 containers:
-  frontend:
-    image: registry.humanitec.io/public/sample-score-app:latest
+  hello-world:
+    image: .
     variables:
       PORT: "3000"
+      MESSAGE: "Hello, World!"
       DB_DATABASE: ${resources.db.name}
       DB_USER: ${resources.db.username}
       DB_PASSWORD: ${resources.db.password}
       DB_HOST: ${resources.db.host}
       DB_PORT: ${resources.db.port}
-
-# Define the resources that this service needs
 resources:
-  dns: # We need a DNS record to point to the service 
+  dns:
     type: dns
-  route: # We need a route attach to the DNS record 
+  route:
     type: route
     params:
       host: ${resources.dns.host}
       path: /
       port: 8080
-  db:  # We need a database to store data
+  db:
     type: postgres

@@ -1,10 +1,10 @@
 # Sample Score App
 
-This is a simple micro service which is deployed with Score and Humanitec.
+This is a simple micro service which is deployed with Score (`score-compose` and `score-helm`).
 
 ## The Workload
 
-The workload is a simple nodejs app which is dockerized.
+The workload is a simple containerized NodeJS app which talking to a PostreSQL database.
 
 ## Deploying
 

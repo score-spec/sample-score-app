@@ -9,6 +9,9 @@ score-compose:
 compose-up:
 	docker compose up -d
 
+compose-test:
+	curl localhost:3000
+
 compose-down:
 	docker compose down -v --remove-orphans
 

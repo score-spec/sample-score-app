@@ -1,0 +1,27 @@
+name: Publish docker image
+
+on:
+  push:
+    branches: ['main']
+
+env:
+  REGISTRY: registry.humanitec.io/public
+  IMAGE_NAME: sample-score-app
+
+jobs:
+  build-and-push-image:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build and push Docker image
+        uses: mr-smithers-excellent/docker-build-push@v6
+        with:
+          image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          registry: ${{ env.REGISTRY }}
+          username: ${{ secrets.REGISTRY_USER }}
+          password: ${{ secrets.REGISTRY_PASSWORD }}
+          tags: latest
+          

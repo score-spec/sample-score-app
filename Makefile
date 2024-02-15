@@ -21,6 +21,7 @@ score-helm:
 		-p containers.hello-world.image=sample-score-app-hello-world \
 		-o values.yaml
 
+NAMESPACE ?= default
 k8s-up:
 	kubectl create deployment postgres \
 		--image=postgres:alpine \

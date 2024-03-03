@@ -4,6 +4,7 @@ score-compose:
 	score-compose run \
 		--build . \
 		-f score.yaml \
+		-p containers.hello-world.variables.MESSAGE="Hello, Compose!" \
 		-o compose.yaml
 
 compose-up:
@@ -19,6 +20,7 @@ score-helm:
 	score-helm run \
 		-f score.yaml \
 		-p containers.hello-world.image=sample-score-app-hello-world \
+		-p containers.hello-world.variables.MESSAGE="Hello, Kubernetes!" \
 		-o values.yaml
 
 NAMESPACE ?= default
@@ -43,7 +45,7 @@ k8s-up:
 	kubectl set env deployment hello-world DB_PASSWORD=${DB_PASSWORD} DB_USER=${DB_USERNAME} DB_DATABASE=${DB_NAME} DB_HOST=postgres
 
 k8s-test:
-	kubectl port-forward service/hello-world 8081:8080
+	kubectl port-forward service/hello-world 8080:8080
 
 k8s-down:
 	kubectl delete deployment postgres \

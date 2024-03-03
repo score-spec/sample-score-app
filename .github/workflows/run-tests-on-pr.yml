@@ -1,0 +1,58 @@
+name: run-tests-on-pr
+permissions:
+  contents: read
+  id-token: write
+on:
+  pull_request:
+env:
+  SCORE_COMPOSE_VERSION: 'latest'
+  SCORE_HELM_VERSION: 'latest'
+  WORKLOAD_NAME: hello-world
+jobs:
+  job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v4
+      - name: install score-compose
+        uses: score-spec/setup-score@v2
+        with:
+          file: score-compose
+          token: ${{ secrets.GITHUB_TOKEN }}
+          version: ${{ env.SCORE_COMPOSE_VERSION }}
+      - name: make score-compose
+        run: |
+          make score-compose
+      - name: make compose-up
+        run: |
+          make compose-up
+      - name: make compose-test
+        run: |
+          sleep 10
+          make compose-test
+      - name: create kind cluster
+        run: |
+          kind create cluster
+      - name: install score-helm
+        uses: score-spec/setup-score@v2
+        with:
+          file: score-helm
+          token: ${{ secrets.GITHUB_TOKEN }}
+          version: ${{ env.SCORE_HELM_VERSION }}
+      - name: make score-helm
+        run: |
+          make score-helm
+      - name: make k8s-up
+        id: helm-install
+        run: |
+          make k8s-up
+          kubectl wait \
+              --for=condition=available \
+              --timeout=30s \
+              deployment/${{ env.WORKLOAD_NAME }}
+      - name: catch helm install errors
+        if: ${{ failure() && steps.helm-install.outcome == 'failure' }}
+        run: |
+          kubectl get events
+          kubectl logs \
+              -l app.kubernetes.io/name=${{ env.WORKLOAD_NAME }}

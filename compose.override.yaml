@@ -1,5 +1,5 @@
 services:
-  hello-world:
+  hello-world-hello-world:
     restart: always
     depends_on:
       - database

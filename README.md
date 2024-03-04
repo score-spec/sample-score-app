@@ -8,4 +8,4 @@ The workload is a simple containerized NodeJS app which talking to a PostreSQL d
 
 ## Deploying
 
-[Score](https://score.dev/) is used to deploy the workload locally with `docker-compose` or to Humanitec, see [Makefile](Makefile) for more details.
+[Score](https://score.dev/) is used to deploy the workload locally with `docker-compose` or to Kubernetes, see [Makefile](Makefile) for more details.

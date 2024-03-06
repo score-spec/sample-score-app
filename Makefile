@@ -41,8 +41,10 @@ k8s-up:
 		--repo https://score-spec.github.io/score-helm-charts \
 		workload \
 		--values values.yaml \
-		--set containers.hello-world.image.name=registry.humanitec.io/public/sample-score-app:latest
-	kubectl set env deployment hello-world DB_PASSWORD=${DB_PASSWORD} DB_USER=${DB_USERNAME} DB_DATABASE=${DB_NAME} DB_HOST=postgres
+		--set containers.hello-world.image.name=registry.humanitec.io/public/sample-score-app:latest \
+		--set containers.hello-world.env.DB_PASSWORD=${DB_PASSWORD} \
+		--set containers.hello-world.env.DB_DATABASE=${DB_NAME} \
+		--set containers.hello-world.env.DB_HOST=postgres
 
 k8s-test:
 	kubectl port-forward service/hello-world 8080:8080

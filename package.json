@@ -1,12 +1,12 @@
 {
   "name": "hello-world",
   "version": "1.0.0",
-  "description": "A hello world app",
+  "description": "An Hello World workload in NodeJS talking to a PostgreSQL database.",
   "main": "index.js",
-  "author": "William Overton",
+  "author": "score.dev",
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "pg": "^8.10.0"
+    "pg": "^8.11.3"
   }
 }

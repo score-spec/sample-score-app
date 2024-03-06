@@ -21,6 +21,10 @@ score-helm:
 		-f score.yaml \
 		-p containers.hello-world.image=sample-score-app-hello-world \
 		-p containers.hello-world.variables.MESSAGE="Hello, Kubernetes!" \
+		-p containers.hello-world.variables.DB_PASSWORD=${DB_PASSWORD} \
+		-p containers.hello-world.variables.DB_USER=${DB_USERNAME} \
+		-p containers.hello-world.variables.DB_DATABASE=${DB_NAME} \
+		-p containers.hello-world.variables.DB_HOST=postgres \
 		-o values.yaml
 
 NAMESPACE ?= default
@@ -42,7 +46,6 @@ k8s-up:
 		workload \
 		--values values.yaml \
 		--set containers.hello-world.image.name=registry.humanitec.io/public/sample-score-app:latest
-	kubectl set env deployment hello-world DB_PASSWORD=${DB_PASSWORD} DB_USER=${DB_USERNAME} DB_DATABASE=${DB_NAME} DB_HOST=postgres
 
 k8s-test:
 	kubectl port-forward service/hello-world 8080:8080

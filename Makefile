@@ -1,11 +1,8 @@
 include .env
 
 score-compose:
-	score-compose run \
-		--build . \
-		-f score.yaml \
-		-p containers.hello-world.variables.MESSAGE="Hello, Compose!" \
-		-o compose.yaml
+	score-compose init
+	score-compose generate score.yaml --override-property containers.hello-world.variables.MESSAGE="Hello, Compose!"
 
 compose-up:
 	docker compose up -d

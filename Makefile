@@ -1,15 +1,14 @@
-include .env
-
 score-compose:
 	score-compose init
 	score-compose generate score.yaml \
+		--build=hello-world=. \
 		--override-property containers.hello-world.variables.MESSAGE="Hello, Compose!"
 
 compose-up:
 	docker compose up -d
 
 compose-test:
-	curl localhost:3000
+	curl localhost:8080
 
 compose-down:
 	docker compose down -v --remove-orphans

@@ -1,3 +1,4 @@
 node_modules/
 compose.yaml
 values.yaml
+.score-compose/

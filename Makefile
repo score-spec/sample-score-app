@@ -1,3 +1,5 @@
+include .env
+
 score-compose:
 	score-compose init
 	score-compose generate score.yaml \

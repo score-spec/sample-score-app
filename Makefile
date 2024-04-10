@@ -7,7 +7,7 @@ score-compose:
 		--override-property containers.hello-world.variables.MESSAGE="Hello, Compose!"
 
 compose-up:
-	docker compose up -d
+	docker compose up --build -d
 
 compose-test:
 	curl localhost:8080

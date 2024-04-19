@@ -1,7 +1,9 @@
 const http = require("http");
 const { Client } = require("pg");
+
+const host = process.env.DB_HOST || "localhost";
 const client = new Client({
-  host: process.env.DB_HOST || "localhost",
+  host,
   user: process.env.DB_USER || "postgres",
   password: process.env.DB_PASSWORD || "secret",
   database: process.env.DB_DATABASE || "score",
@@ -11,13 +13,18 @@ const client = new Client({
 const requestHandler = async (request, response) => {
   console.log(request.url);
 
-  // Run hello world query
-  const res = await client.query(
-    `SELECT 'This is an application talking to a PostgreSQL database, deployed with Score!' as message`
-  );
-
-  const queryResult = res.rows[0].message;
   const message = process.env.MESSAGE || "Hello, World!";
+
+  // Run hello world query
+  const serverVersionRes = await client.query(
+    `SHOW server_version;`
+  );
+  const serverVersion = serverVersionRes.rows[0].server_version;
+
+  const versionRes = await client.query(
+    `SELECT version();`
+  );
+  const version = versionRes.rows[0].version;
 
   const html = `
   <html>
@@ -26,7 +33,14 @@ const requestHandler = async (request, response) => {
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
       <div class="container text-center mt-5 pt-5">
         <h1>${message}</h1>
-        <p>${queryResult}</p>
+        <p>This is an application talking to a PostgreSQL <code>${serverVersion}</code> database on host <code>${host}</code>, deployed with Score!</p>
+        <p><code></p>
+        <p>
+          <pre>
+          SELECT version();
+          ${version}
+          </pre>
+        </p>
       </div>
     </body>
   </html>
@@ -55,6 +69,8 @@ const App = async () => {
 App();
 
 // Exit the process when signal is received (For docker)
-process.on("SIGINT", () => {
-  process.exit();
+["SIGINT", "SIGTERM"].forEach((signal) => {
+  process.on(signal, () => {
+    process.exit();
+  });
 });

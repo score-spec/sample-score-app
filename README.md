@@ -6,7 +6,7 @@ This is a simple micro service which is deployed with Score (`score-compose` and
 
 ## The Workload
 
-The workload is a simple containerized NodeJS app which talking to a PostreSQL database.
+The workload is a simple containerized NodeJS app talking to a PostreSQL database.
 
 ## Deploying
 

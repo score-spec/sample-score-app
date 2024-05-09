@@ -23,11 +23,11 @@
 			"extensions": [
 				"redhat.vscode-yaml"
 			],
-            "settings": {
-                "yaml.schemas": {
+			"settings": {
+				"yaml.schemas": {
 					"https://raw.githubusercontent.com/score-spec/schema/main/score-v1b1.json": "score.yaml"
-				  }
-            }
+				}
+			}
 		}
-	  }
+	}
 }

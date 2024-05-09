@@ -10,4 +10,16 @@ The workload is a simple containerized NodeJS app talking to a PostreSQL databas
 
 ## Deploying
 
-[Score](https://score.dev/) is used to deploy the workload locally with `docker-compose` or to Kubernetes, see [Makefile](Makefile) for more details.
+[Score](https://score.dev/) is used to deploy the workload locally with `score-compose` in Docker or with `score-helm` in Kubernetes. See [Makefile](Makefile) for more details.
+
+Locally:
+```bash
+make compose-test
+```
+
+In Kubernetes:
+```bash
+kind create cluster
+
+make k8s-up
+```

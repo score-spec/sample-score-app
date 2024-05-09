@@ -20,12 +20,6 @@ jobs:
           file: score-compose
           token: ${{ secrets.GITHUB_TOKEN }}
           version: ${{ env.SCORE_COMPOSE_VERSION }}
-      - name: make compose.yaml
-        run: |
-          make compose.yaml
-      - name: make compose-up
-        run: |
-          make compose-up
       - name: make compose-test
         run: |
           make compose-test

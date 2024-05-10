@@ -27,7 +27,7 @@ jobs:
         run: |
           kind create cluster
       - name: install score-helm
-        uses: score-spec/setup-score@v2
+        uses: score-spec/setup-score@v3
         with:
           file: score-helm
           token: ${{ secrets.GITHUB_TOKEN }}

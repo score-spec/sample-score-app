@@ -67,7 +67,7 @@ k8s-up: manifests.yaml
 k8s-test: k8s-up
 	kubectl wait pods \
 		-n ${NAMESPACE} \
-		-l score-workload=${CONTAINER_NAME} \
+		-l score-workload=${WORKLOAD_NAME} \
 		--for condition=Ready \
 		--timeout=90s
 	kubectl -n nginx-gateway port-forward service/ngf-nginx-gateway-fabric 8080:80

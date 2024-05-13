@@ -13,14 +13,16 @@ help:
 
 include .env
 
-CONTAINER_IMAGE = hello-world:test
+CONTAINER_NAME = hello-world
+CONTAINER_IMAGE = ${CONTAINER_NAME}:test
+WORKLOAD_NAME = hello-world
 
 compose.yaml: score.yaml
 	score-compose init \
 		--no-sample
 	score-compose generate score.yaml \
-		--build 'hello-world={"context":".","tags":["${CONTAINER_IMAGE}"]}' \
-		--override-property containers.hello-world.variables.MESSAGE="Hello, Compose!"
+		--build '${CONTAINER_NAME}={"context":".","tags":["${CONTAINER_IMAGE}"]}' \
+		--override-property containers.${CONTAINER_NAME}.variables.MESSAGE="Hello, Compose!"
 
 ## Generate a compose.yaml file from the score spec and launch it.
 .PHONY: compose-up
@@ -31,7 +33,7 @@ compose-up: compose.yaml
 .PHONY: compose-test
 compose-test: compose-up
 	sleep 5
-	curl $$(score-compose resources get-outputs dns.default#hello-world.dns --format '{{ .host }}:8080')
+	curl $$(score-compose resources get-outputs dns.default#${WORKLOAD_NAME}.dns --format '{{ .host }}:8080')
 
 ## Delete the containers running via compose down.
 .PHONY: compose-down
@@ -43,7 +45,7 @@ manifests.yaml: score.yaml
 		--no-sample
 	score-k8s generate score.yaml \
 		--image ${CONTAINER_IMAGE} \
-		--override-property containers.hello-world.variables.MESSAGE="Hello, Kubernetes!"
+		--override-property containers.${CONTAINER_NAME}.variables.MESSAGE="Hello, Kubernetes!"
 
 ## Load the local container image in the current Kind cluster.
 .PHONY: kind-load-image
@@ -65,7 +67,7 @@ k8s-up: manifests.yaml
 k8s-test: k8s-up
 	kubectl wait pods \
 		-n ${NAMESPACE} \
-		-l score-workload=hello-world \
+		-l score-workload=${CONTAINER_NAME} \
 		--for condition=Ready \
 		--timeout=90s
 	kubectl -n nginx-gateway port-forward service/ngf-nginx-gateway-fabric 8080:80

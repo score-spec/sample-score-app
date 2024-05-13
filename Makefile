@@ -56,7 +56,6 @@ NAMESPACE ?= default
 k8s-up: manifests.yaml
 	$(MAKE) k8s-down || true
 	$(MAKE) compose-down || true
-	$(MAKE) kind-load-image
 	kubectl apply \
 		-f manifests.yaml \
 		-n ${NAMESPACE}

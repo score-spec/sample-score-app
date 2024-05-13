@@ -6,10 +6,10 @@ on:
   pull_request:
 env:
   SCORE_COMPOSE_VERSION: 'latest'
-  SCORE_HELM_VERSION: 'latest'
+  SCORE_K8S_VERSION: 'latest'
   WORKLOAD_NAME: hello-world
 jobs:
-  job:
+  score-compose:
     runs-on: ubuntu-latest
     steps:
       - name: checkout code
@@ -23,18 +23,38 @@ jobs:
       - name: make compose-test
         run: |
           make compose-test
+  score-k8s:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v4
       - name: create kind cluster
         run: |
           kind create cluster
-      - name: install score-helm
+          kubectl apply \
+              -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.0.0/standard-install.yaml
+          helm install ngf oci://ghcr.io/nginxinc/charts/nginx-gateway-fabric \
+              --create-namespace \
+              -n nginx-gateway \
+              --set service.type=ClusterIP
+          kubectl apply -f - <<EOF
+          apiVersion: gateway.networking.k8s.io/v1
+          kind: Gateway
+          metadata:
+            name: default
+          spec:
+            gatewayClassName: nginx
+            listeners:
+            - name: http
+              port: 80
+              protocol: HTTP
+          EOF
+      - name: install score-k8s
         uses: score-spec/setup-score@v3
         with:
-          file: score-helm
+          file: score-k8s
           token: ${{ secrets.GITHUB_TOKEN }}
-          version: ${{ env.SCORE_HELM_VERSION }}
-      - name: make values.yaml
-        run: |
-          make values.yaml
+          version: ${{ env.SCORE_K8S_VERSION }}
       - name: make k8s-up
         id: helm-install
         run: |

@@ -38,16 +38,12 @@ compose-test: compose-up
 compose-down:
 	docker compose down -v --remove-orphans || true
 
-values.yaml: score.yaml
-	score-helm run \
-		-f score.yaml \
-		-p containers.hello-world.image=${CONTAINER_IMAGE} \
-		-p containers.hello-world.variables.MESSAGE="Hello, Kubernetes!" \
-		-p containers.hello-world.variables.DB_PASSWORD=${DB_PASSWORD} \
-		-p containers.hello-world.variables.DB_USER=${DB_USERNAME} \
-		-p containers.hello-world.variables.DB_DATABASE=${DB_NAME} \
-		-p containers.hello-world.variables.DB_HOST=postgres \
-		-o values.yaml
+manifests.yaml: score.yaml
+	score-k8s init \
+		--no-sample
+	score-k8s generate score.yaml \
+		--image ${CONTAINER_IMAGE} \
+		--override-property containers.hello-world.variables.MESSAGE="Hello, Kubernetes!"
 
 ## Load the local container image in the current Kind cluster.
 .PHONY: kind-load-image
@@ -55,49 +51,29 @@ kind-load-image:
 	kind load docker-image ${CONTAINER_IMAGE}
 
 NAMESPACE ?= default
+## Generate a manifests.yaml file from the score spec and apply it in Kubernetes.
 .PHONY: k8s-up
-k8s-up: values.yaml
+k8s-up: manifests.yaml
 	$(MAKE) k8s-down || true
 	$(MAKE) compose-down || true
-	kubectl create deployment postgres \
-		--image=postgres:alpine \
+	$(MAKE) kind-load-image
+	kubectl apply \
+		-f manifests.yaml \
 		-n ${NAMESPACE}
-	kubectl set env deployment postgres POSTGRES_PASSWORD=${DB_PASSWORD} POSTGRES_USER=${DB_USERNAME} POSTGRES_DB=${DB_NAME}
-	kubectl expose deployment postgres \
-		--port 5432 \
-		-n ${NAMESPACE}
-	
-	helm upgrade \
-		-n ${NAMESPACE} \
-		--install \
-		--create-namespace \
-		hello-world \
-		--repo https://score-spec.github.io/score-helm-charts \
-		workload \
-		--values values.yaml \
-		--set containers.hello-world.image.name=${CONTAINER_IMAGE}
 
 ## Expose the container deployed in Kubernetes via port-forward.
 .PHONY: k8s-test
 k8s-test: k8s-up
 	kubectl wait pods \
 		-n ${NAMESPACE} \
-		-l app.kubernetes.io/name=hello-world \
+		-l score-workload=hello-world \
 		--for condition=Ready \
 		--timeout=90s
-	kubectl port-forward \
-		-n ${NAMESPACE} \
-		service/hello-world \
-		8080:8080
+	kubectl -n nginx-gateway port-forward service/ngf-nginx-gateway-fabric 8080:80
 
-## Delete the the deployment of the local container in Kubernetes.
+## Delete the deployment of the local container in Kubernetes.
 .PHONY: k8s-down
 k8s-down:
-	kubectl delete deployment postgres \
+	kubectl delete \
+		-f manifests.yaml \
 		-n ${NAMESPACE}
-	kubectl delete svc postgres \
-		-n ${NAMESPACE}
-	
-	helm uninstall \
-		-n ${NAMESPACE} \
-		hello-world

@@ -14,14 +14,16 @@ The workload is a simple containerized NodeJS app talking to a PostreSQL databas
 
 Locally:
 ```bash
-make compose-test
+make compose-up
+
+curl $(score-compose resources get-outputs dns.default#hello-world.dns --format '{{ .host }}:8080')
 ```
 
 In Kubernetes (`Kind`):
 ```bash
 kind create cluster
 kubectl apply \
-    -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.0.0/standard-install.yaml
+    -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.1.0/standard-install.yaml
 helm install ngf oci://ghcr.io/nginxinc/charts/nginx-gateway-fabric \
     --create-namespace \
     -n nginx-gateway \
@@ -30,11 +32,11 @@ kubectl apply -f - <<EOF
 apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
 metadata:
-name: default
+  name: default
 spec:
-gatewayClassName: nginx
-listeners:
-- name: http
+  gatewayClassName: nginx
+  listeners:
+  - name: http
     port: 80
     protocol: HTTP
 EOF
@@ -42,4 +44,6 @@ EOF
 make kind-load-image
 
 make k8s-up
+
+curl $(score-k8s resources get-outputs dns.default#hello-world.dns --format '{{ .host }}:8080')
 ```

@@ -15,9 +15,11 @@ CONTAINER_NAME = hello-world
 CONTAINER_IMAGE = ${CONTAINER_NAME}:test
 WORKLOAD_NAME = hello-world
 
-compose.yaml: score.yaml
+.score-compose/state.yaml:
 	score-compose init \
 		--no-sample
+
+compose.yaml: score.yaml .score-compose/state.yaml Makefile
 	score-compose generate score.yaml \
 		--build '${CONTAINER_NAME}={"context":".","tags":["${CONTAINER_IMAGE}"]}' \
 		--override-property containers.${CONTAINER_NAME}.variables.MESSAGE="Hello, Compose!"

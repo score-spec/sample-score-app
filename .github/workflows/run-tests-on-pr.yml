@@ -27,7 +27,7 @@ jobs:
         run: |
           kind create cluster
           kubectl apply \
-              -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.0.0/standard-install.yaml
+              -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.1.0/standard-install.yaml
           helm install ngf oci://ghcr.io/nginxinc/charts/nginx-gateway-fabric \
               --create-namespace \
               -n nginx-gateway \
@@ -60,4 +60,4 @@ jobs:
         run: |
           kubectl get events
           kubectl logs \
-              -l app.kubernetes.io/name=${{ env.WORKLOAD_NAME }}
+              -l score-workload=${{ env.WORKLOAD_NAME }}

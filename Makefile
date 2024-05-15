@@ -11,8 +11,6 @@ help:
 .PHONY: .FORCE
 .FORCE:
 
-include .env
-
 CONTAINER_NAME = hello-world
 CONTAINER_IMAGE = ${CONTAINER_NAME}:test
 WORKLOAD_NAME = hello-world

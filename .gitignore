@@ -1,6 +1,5 @@
 node_modules/
 compose.yaml
-values.yaml
 .score-compose/
 .score-k8s/
 manifests.yaml

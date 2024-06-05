@@ -16,34 +16,16 @@ Locally:
 ```bash
 make compose-up
 
-curl $(score-compose resources get-outputs dns.default#hello-world.dns --format '{{ .host }}:8080')
+make compose-test
 ```
 
 In Kubernetes (`Kind`):
 ```bash
-kind create cluster
-kubectl apply \
-    -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.1.0/standard-install.yaml
-helm install ngf oci://ghcr.io/nginxinc/charts/nginx-gateway-fabric \
-    --create-namespace \
-    -n nginx-gateway \
-    --set service.type=ClusterIP
-kubectl apply -f - <<EOF
-apiVersion: gateway.networking.k8s.io/v1
-kind: Gateway
-metadata:
-  name: default
-spec:
-  gatewayClassName: nginx
-  listeners:
-  - name: http
-    port: 80
-    protocol: HTTP
-EOF
+make kind-create-cluster
 
 make kind-load-image
 
 make k8s-up
 
-curl $(score-k8s resources get-outputs dns.default#hello-world.dns --format '{{ .host }}:8080')
+make k8s-test
 ```

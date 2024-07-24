@@ -3,6 +3,7 @@
 This is a simple micro service which is deployed with Score (`score-compose` and `score-k8s`).
 
 [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/score-spec/sample-score-app)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fscore-spec%2Fsample-score-app.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fscore-spec%2Fsample-score-app?ref=badge_shield)
 
 ## The Workload
 
@@ -29,3 +30,6 @@ make k8s-up
 
 make k8s-test
 ```
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fscore-spec%2Fsample-score-app.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fscore-spec%2Fsample-score-app?ref=badge_large)

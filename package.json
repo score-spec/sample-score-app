@@ -7,6 +7,6 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "pg": "^8.13.0"
+    "pg": "^8.13.1"
   }
 }

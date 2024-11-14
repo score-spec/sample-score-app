@@ -1,11 +1,6 @@
 apiVersion: score.dev/v1b1
 metadata:
   name: hello-world
-service:
-  ports:
-    www:
-      port: 8080
-      targetPort: 3000
 containers:
   hello-world:
     image: .
@@ -18,6 +13,8 @@ containers:
       DB_HOST: ${resources.db.host}
       DB_PORT: ${resources.db.port}
 resources:
+  db:
+    type: postgres
   dns:
     type: dns
   route:
@@ -26,5 +23,8 @@ resources:
       host: ${resources.dns.host}
       path: /
       port: 8080
-  db:
-    type: postgres
+service:
+  ports:
+    www:
+      port: 8080
+      targetPort: 3000

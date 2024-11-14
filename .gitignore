@@ -3,3 +3,4 @@ compose.yaml
 .score-compose/
 .score-k8s/
 manifests.yaml
+demo-magic.sh

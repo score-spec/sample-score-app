@@ -1,0 +1,24 @@
+{
+	"name": "Score Dev Container with Podman",
+	"image": "mcr.microsoft.com/devcontainers/base:noble",
+	"features": {
+	},
+	"remoteEnv": {
+        "PODMAN_USERNS": "keep-id"
+      },
+    "containerUser": "vscode",
+	"postCreateCommand": "bash .devcontainer/podman/installPodman.sh",
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"redhat.vscode-yaml"
+			],
+			"settings": {
+				"yaml.schemas": {
+					"https://raw.githubusercontent.com/score-spec/spec/main/score-v1b1.json": "score.yaml"
+				},
+				"docker.dockerPath": "podman"
+			}
+		}
+	}
+}

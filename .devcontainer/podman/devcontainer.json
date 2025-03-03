@@ -1,13 +1,21 @@
 {
 	"name": "Score Dev Container with Podman",
-	"image": "mcr.microsoft.com/devcontainers/base:noble",
+	"build": {
+        "dockerfile": "Dockerfile"
+    },
 	"features": {
 	},
-	"remoteEnv": {
-        "PODMAN_USERNS": "keep-id"
-      },
+	//"remoteEnv": {
+    //    "PODMAN_USERNS": "keep-id"
+    //  },
+    //"workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,Z",
+    //"workspaceFolder": "/workspace",
+    //"runArgs": ["--userns=keep-id"],
     "containerUser": "vscode",
-	"postCreateCommand": "bash .devcontainer/podman/installPodman.sh",
+    "containerEnv": {
+      "HOME": "/home/vscode"
+    },
+	"postCreateCommand": "bash .devcontainer/installMoreTools.sh",
 	"customizations": {
 		"vscode": {
 			"extensions": [

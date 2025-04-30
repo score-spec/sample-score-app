@@ -1,5 +1,5 @@
 {
-	"name": "Score Dev Container",
+	"name": "Score Dev Container with Docker",
 	"image": "mcr.microsoft.com/devcontainers/base:noble",
 	"features": {
 		"ghcr.io/devcontainers/features/docker-in-docker:2": {

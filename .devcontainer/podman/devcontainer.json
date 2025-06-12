@@ -1,19 +1,20 @@
 {
 	"name": "Score Dev Container with Podman",
 	"build": {
-        "dockerfile": "Dockerfile"
+		"dockerfile": "Dockerfile",
+		"args": {
+			"PODMAN_VERSION": "v5.5.1"
+		}
     },
 	"features": {
+			"ghcr.io/devcontainers/features/docker-outside-of-docker:1": {
+				"version": "latest",
+				"dockerDashComposeVersion": "none"
+			}
 	},
-	//"remoteEnv": {
-    //    "PODMAN_USERNS": "keep-id"
-    //  },
-    //"workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,Z",
-    //"workspaceFolder": "/workspace",
-    //"runArgs": ["--userns=keep-id"],
-    "containerUser": "vscode",
-    "containerEnv": {
-      "HOME": "/home/vscode"
+	"remoteUser": "root",
+	"remoteEnv": {
+		"CONTAINER_HOST": "unix:///var/run/docker.sock"
     },
 	"postCreateCommand": "bash .devcontainer/installMoreTools.sh",
 	"customizations": {

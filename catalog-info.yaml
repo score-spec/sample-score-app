@@ -1,0 +1,62 @@
+---
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+    annotations:
+        github.com/project-slug: score-spec/sample-score-app
+    description: sample-score-app
+    links:
+        - icon: github
+          title: Repository
+          url: https://github.com/score-spec/sample-score-app
+    name: sample-score-app
+spec:
+    owner: user:guest
+---
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+    annotations:
+        github.com/project-slug: score-spec/sample-score-app
+    description: hello-world
+    links:
+        - icon: github
+          title: Repository
+          url: https://github.com/score-spec/sample-score-app
+    name: sample-score-app-hello-world
+    tags:
+        - nodejs
+        - http
+        - website
+        - javascript
+    title: hello-world
+spec:
+    dependsOn:
+        - resource:sample-score-app-hello-world-db
+        - resource:sample-score-app-hello-world-dns
+    lifecycle: experimental
+    owner: user:guest
+    system: sample-score-app
+    type: service
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+    description: sample-score-app-hello-world-db
+    name: sample-score-app-hello-world-db
+    title: db
+spec:
+    owner: user:guest
+    system: sample-score-app
+    type: postgres
+---
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+    description: sample-score-app-hello-world-dns
+    name: sample-score-app-hello-world-dns
+    title: dns
+spec:
+    owner: user:guest
+    system: sample-score-app
+    type: dns

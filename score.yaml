@@ -1,6 +1,8 @@
 apiVersion: score.dev/v1b1
 metadata:
   name: hello-world
+  annotations:
+    tags: "nodejs,http,website,javascript"
 containers:
   hello-world:
     image: .

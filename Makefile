@@ -89,3 +89,17 @@ k8s-down:
 	kubectl delete \
 		-f manifests.yaml \
 		-n ${NAMESPACE}
+
+## Generate catalog-info.yaml for Backstage.
+.PHONY: generate-catalog-info
+generate-catalog-info:
+	score-k8s init \
+		--no-sample \
+		--patch-templates https://raw.githubusercontent.com/score-spec/community-patchers/refs/heads/main/score-k8s/backstage-catalog-entities.tpl
+	score-k8s generate \
+		--namespace sample-score-app \
+		--generate-namespace \
+		--image ghcr.io/score-spec/sample-score-app:latest \
+		score.yaml \
+		--output catalog-info.yaml
+	sed 's,$$GITHUB_REPO,score-spec/sample-score-app,g' -i catalog-info.yaml

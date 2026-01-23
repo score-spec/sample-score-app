@@ -14,8 +14,17 @@ jobs:
     steps:
       - name: checkout code
         uses: actions/checkout@v6
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@8d2750c68a42422c14e847fe6c8ac0403b4cbd6f # v3.12.0
+        with:
+          version: latest
+      - name: docker login
+        uses: docker/login-action@5e57cd118135c172c3672efd75eb46360885c0ef # v3.6.0
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_TOKEN }}
       - name: install score-compose
-        uses: score-spec/setup-score@v3
+        uses: score-spec/setup-score@78455c3feb0bc3381ff7b39ed40a98e03955fa72
         with:
           file: score-compose
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -30,7 +39,7 @@ jobs:
         run: |
           make kind-load-image
       - name: install score-k8s
-        uses: score-spec/setup-score@v3
+        uses: score-spec/setup-score@78455c3feb0bc3381ff7b39ed40a98e03955fa72
         with:
           file: score-k8s
           token: ${{ secrets.GITHUB_TOKEN }}

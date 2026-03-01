@@ -1,7 +1,6 @@
 name: run-tests-on-pr
 permissions:
   contents: read
-  id-token: write
 on:
   pull_request:
 env:

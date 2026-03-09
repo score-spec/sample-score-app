@@ -1,11 +1,11 @@
-FROM alpine:3 as builder
-RUN apk add --no-cache nodejs npm
+FROM dhi.io/node:24-alpine3.23-dev AS builder
+WORKDIR /usr/src/app
 COPY package*.json ./
 RUN npm install --only=prod
 
-FROM alpine:3
-RUN apk add --no-cache nodejs
-COPY --from=builder /node_modules ./node_modules
+FROM dhi.io/node:24-alpine3.23
+WORKDIR /usr/src/app
+COPY --from=builder /usr/src/app/node_modules ./node_modules
 COPY index.js index.js
 EXPOSE 3000
 CMD ["node", "index.js"]

@@ -1,7 +1,6 @@
 name: run-tests-on-pr
 permissions:
   contents: read
-  id-token: write
 on:
   pull_request:
 env:
@@ -13,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: checkout code
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@8d2750c68a42422c14e847fe6c8ac0403b4cbd6f # v3.12.0
         with:
@@ -24,7 +23,7 @@ jobs:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_TOKEN }}
       - name: install score-compose
-        uses: score-spec/setup-score@78455c3feb0bc3381ff7b39ed40a98e03955fa72
+        uses: score-spec/setup-score@9ce358a6641972930fbf1c91d93185fec520f7e4 # v3.1.8
         with:
           file: score-compose
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -39,7 +38,7 @@ jobs:
         run: |
           make kind-load-image
       - name: install score-k8s
-        uses: score-spec/setup-score@78455c3feb0bc3381ff7b39ed40a98e03955fa72
+        uses: score-spec/setup-score@9ce358a6641972930fbf1c91d93185fec520f7e4 # v3.1.8
         with:
           file: score-k8s
           token: ${{ secrets.GITHUB_TOKEN }}

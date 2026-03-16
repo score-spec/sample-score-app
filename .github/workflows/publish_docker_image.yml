@@ -9,7 +9,7 @@ permissions:
 
 jobs:
   build-and-push-image:
-    uses: docker/github-builder/.github/workflows/build.yml@abff7868c866c54704b6afa9ad5871948ca97334 # v1.1.0
+    uses: docker/github-builder/.github/workflows/build.yml@61b16ec4d881c8bdebcb8ed369c81c20187975ba # v1.3.0
     permissions:
       id-token: write # to sign attestation(s) with GitHub OIDC Token
       packages: write # to push container image to ghcr

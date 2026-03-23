@@ -5,7 +5,7 @@ on:
   pull_request:
 jobs:
   test-multi-arch-build:
-    uses: docker/github-builder/.github/workflows/build.yml@61b16ec4d881c8bdebcb8ed369c81c20187975ba # v1.3.0
+    uses: docker/github-builder/.github/workflows/build.yml@70313223e2665c3211b454b3fea6534624e78d64 # v1.4.0
     if: ${{ !github.event.pull_request.head.repo.fork }}
     with:
       output: image

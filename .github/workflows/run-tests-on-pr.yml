@@ -115,7 +115,7 @@ jobs:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_TOKEN }}
       - name: install score-compose
-        uses: score-spec/setup-score@78de9126e3f298fe8b799b6afb7b0b67bfe0d1e3 # v3.2.0
+        uses: score-spec/setup-score@200eb5eef7076b4d72da20bef38e80a49af6b7b6 # v3.2.1
         with:
           file: score-compose
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -130,7 +130,7 @@ jobs:
         run: |
           make kind-load-image
       - name: install score-k8s
-        uses: score-spec/setup-score@78de9126e3f298fe8b799b6afb7b0b67bfe0d1e3 # v3.2.0
+        uses: score-spec/setup-score@200eb5eef7076b4d72da20bef38e80a49af6b7b6 # v3.2.1
         with:
           file: score-k8s
           token: ${{ secrets.GITHUB_TOKEN }}

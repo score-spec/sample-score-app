@@ -10,13 +10,25 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+    groups:
+      ci:
+        patterns:
+          - "*"
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
       interval: "weekly"
+    groups:
+      ci:
+        patterns:
+          - "*"
   - package-ecosystem: "docker"
     directory: "/"
     schedule:
       interval: "weekly"
     registries:
     - dhi
+    groups:
+      ci:
+        patterns:
+          - "*"

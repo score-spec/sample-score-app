@@ -31,7 +31,7 @@ jobs:
     if: ${{ !github.event.pull_request.head.repo.fork }}
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@8d3c67de8e2fe68ef647c8db1e6a09f647780f40 # v2.19.0
+        uses: step-security/harden-runner@a5ad31d6a139d249332a2605b85202e8c0b78450 # v2.19.1
         with:
           egress-policy: audit
       - name: checkout code in current PR branch
@@ -108,7 +108,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@8d3c67de8e2fe68ef647c8db1e6a09f647780f40 # v2.19.0
+        uses: step-security/harden-runner@a5ad31d6a139d249332a2605b85202e8c0b78450 # v2.19.1
         with:
           egress-policy: audit
       - name: checkout code
@@ -123,7 +123,7 @@ jobs:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_TOKEN }}
       - name: install score-compose
-        uses: score-spec/setup-score@8dce39f07e47ddee44ad7f6699675e12e484ef46 # v3.2.2
+        uses: score-spec/setup-score@1db79668fdd7b3e68ca5d5a734aad29ea75901cd # v3.2.3
         with:
           file: score-compose
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -138,7 +138,7 @@ jobs:
         run: |
           make kind-load-image
       - name: install score-k8s
-        uses: score-spec/setup-score@8dce39f07e47ddee44ad7f6699675e12e484ef46 # v3.2.2
+        uses: score-spec/setup-score@1db79668fdd7b3e68ca5d5a734aad29ea75901cd # v3.2.3
         with:
           file: score-k8s
           token: ${{ secrets.GITHUB_TOKEN }}

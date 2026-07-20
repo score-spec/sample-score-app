@@ -5,7 +5,7 @@ on:
   pull_request:
 jobs:
   test-multi-arch-build:
-    uses: docker/github-builder/.github/workflows/build.yml@c4a1b216d96a8c85b45a9974b37857828274c808 # v1.13.0
+    uses: docker/github-builder/.github/workflows/build.yml@3415a188caae9a0da7fba83bc06985776e0b1790 # v1.14.0
     if: ${{ !github.event.pull_request.head.repo.fork }}
     with:
       output: image
@@ -35,7 +35,7 @@ jobs:
         with:
           egress-policy: audit
       - name: checkout code in current PR branch
-        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
       - name: Set up Docker
@@ -78,7 +78,7 @@ jobs:
         run: |
           docker images
       - name: checkout code in main branch
-        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           ref: main
       - name: Build container image from main branch
@@ -112,7 +112,7 @@ jobs:
         with:
           egress-policy: audit
       - name: checkout code
-        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@bb05f3f5519dd87d3ba754cc423b652a5edd6d2c # v4.2.0
         with:

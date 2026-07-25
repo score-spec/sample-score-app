@@ -8,7 +8,7 @@ permissions:
 
 jobs:
   build-and-push-image:
-    uses: docker/github-builder/.github/workflows/build.yml@3415a188caae9a0da7fba83bc06985776e0b1790 # v1.14.0
+    uses: docker/github-builder/.github/workflows/build.yml@27ade872c1e2296e62ef15ab3b10d37665e57cf7 # main
     permissions:
       id-token: write # to sign attestation(s) with GitHub OIDC Token
       packages: write # to push container image to ghcr
@@ -22,14 +22,17 @@ jobs:
       set-meta-labels: true
       set-meta-annotations: true
       meta-images: |
-        ghcr.io/score-spec/sample-score-app
-        scorespec/sample-score-app
+        ghcr.io/${{ github.repository }}
+        ${{ vars.DOCKER_HUB_ORG }}/sample-score-app
       meta-tags: |
         latest
+      registry-identities: |
+        - type: dockerhub
+          registry: docker.io
+          username: ${{ vars.DOCKER_HUB_ORG }}
+          connection_id: ${{ vars.DOCKER_HUB_OIDC_CONNECTION_ID }}
     secrets:
       registry-auths: |
         - registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-        - username: ${{ secrets.DOCKER_HUB_USERNAME }}
-          password: ${{ secrets.DOCKER_HUB_RELEASE_TOKEN }}

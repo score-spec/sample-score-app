@@ -35,7 +35,7 @@ jobs:
     if: ${{ !github.event.pull_request.head.repo.fork }}
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@05e31511f85b41b11d1cf0ef85d0992719546e2c # v2.21.0
+        uses: step-security/harden-runner@e14015d583714f6e62063499dc959a02595150a1 # v2.21.1
         with:
           egress-policy: audit
       - name: checkout code in current PR branch
@@ -113,7 +113,7 @@ jobs:
       id-token: write # required to request the GitHub OIDC token
     steps:
       - name: Harden Runner
-        uses: step-security/harden-runner@05e31511f85b41b11d1cf0ef85d0992719546e2c # v2.21.0
+        uses: step-security/harden-runner@e14015d583714f6e62063499dc959a02595150a1 # v2.21.1
         with:
           egress-policy: audit
       - name: checkout code
@@ -131,7 +131,7 @@ jobs:
             - registry: docker.io
               username: ${{ vars.DOCKER_HUB_ORG }}
       - name: install score-compose
-        uses: score-spec/setup-score@888a7deafd396c3f3f05e00d2d9b0ab225799ac0 # v3.2.4
+        uses: score-spec/setup-score@433682eb89ccac2215d5ea58355c716a5b852e9a # v3.2.5
         with:
           file: score-compose
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -146,7 +146,7 @@ jobs:
         run: |
           make kind-load-image
       - name: install score-k8s
-        uses: score-spec/setup-score@888a7deafd396c3f3f05e00d2d9b0ab225799ac0 # v3.2.4
+        uses: score-spec/setup-score@433682eb89ccac2215d5ea58355c716a5b852e9a # v3.2.5
         with:
           file: score-k8s
           token: ${{ secrets.GITHUB_TOKEN }}

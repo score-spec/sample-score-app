@@ -106,7 +106,7 @@ jobs:
           to: local://hello-world:main
           write-comment: true
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          organization: ${{ vars.DOCKER_HUB_ORG }}
+          #organization: ${{ vars.DOCKER_HUB_ORG }}
   test-container:
     runs-on: ubuntu-latest
     permissions:
